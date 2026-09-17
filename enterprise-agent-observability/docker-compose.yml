@@ -1,0 +1,20 @@
+# Runs the Agents API. Opik itself is started separately (see scripts/start_opik_local.sh),
+# because Opik ships its own multi-container stack (backend, frontend, ClickHouse, MySQL, Redis).
+services:
+  agents-api:
+    build: .
+    image: enterprise-agents:0.1.0
+    env_file: .env
+    environment:
+      # Reach the self-hosted Opik running on the Docker host
+      OPIK_URL: http://host.docker.internal:5173/api
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped

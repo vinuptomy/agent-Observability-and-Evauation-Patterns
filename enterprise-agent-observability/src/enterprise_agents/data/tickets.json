@@ -1,0 +1,4 @@
+{
+  "INC-1001": {"ticket_id": "INC-1001", "status": "In Progress", "summary": "VPN disconnects frequently", "assignee_group": "Network Operations", "updated": "2026-09-14"},
+  "INC-1002": {"ticket_id": "INC-1002", "status": "Resolved", "summary": "Outlook calendar not syncing", "assignee_group": "M365 Support", "updated": "2026-09-10"}
+}
