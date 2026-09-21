@@ -1,0 +1,57 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agentic-eval-kit"
+version = "1.0.0"
+description = "Pluggable, framework-agnostic evaluation module for multi-agent / agentic AI systems"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "Vinu P. Tomy" }]
+keywords = ["llm", "agents", "evaluation", "multi-agent", "llm-as-a-judge", "langgraph", "crewai", "autogen"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Intended Audience :: Developers",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = ["pydantic>=2.5", "PyYAML>=6.0"]
+
+[project.optional-dependencies]
+openai = ["openai>=1.40"]
+azure = ["openai>=1.40", "azure-identity>=1.16"]
+anthropic = ["anthropic>=0.34"]
+langchain = ["langchain-core>=0.3", "langgraph>=0.2"]
+crewai = ["crewai>=0.80"]
+autogen = ["autogen-agentchat>=0.4"]
+openai-agents = ["openai-agents>=0.0.10"]
+otel = ["opentelemetry-api>=1.25", "opentelemetry-sdk>=1.25", "opentelemetry-exporter-otlp>=1.25"]
+ragas = ["ragas>=0.2"]
+deepeval = ["deepeval>=2.0"]
+langfuse = ["langfuse>=2.0"]
+dev = ["pytest>=8.0", "pytest-cov>=5.0", "ruff>=0.5", "mypy>=1.10"]
+all = ["agentic-eval-kit[azure,anthropic,otel]"]
+
+[project.scripts]
+agentic-eval = "agentic_eval.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src", "."]
+testpaths = ["tests"]
+addopts = "-q"
+
+[tool.ruff]
+line-length = 140
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101", "S311"]
+
+[tool.mypy]
+python_version = "3.10"
+ignore_missing_imports = true

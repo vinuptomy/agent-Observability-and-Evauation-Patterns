@@ -1,0 +1,67 @@
+# Agent quality gate: unit tests + offline regression eval on every PR, LLM-judged eval on main / nightly.
+name: agent-eval
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "0 3 * * *"          # nightly drift check with a real judge
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  checks: write                  # publish JUnit results
+  pull-requests: write           # PR comment with the markdown report
+
+concurrency:
+  group: agent-eval-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "${{ matrix.python }}", cache: pip}
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests examples
+      - run: pytest -q
+
+  eval:
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      # PRs: deterministic offline judge (no secrets on forks). main/nightly: real judge via OIDC-free secret.
+      AGENTIC_EVAL_JUDGE: ${{ github.event_name == 'pull_request' && 'mock' || 'azure_openai' }}
+      AGENTIC_EVAL_JUDGE_MODEL: gpt-4o-mini
+      AZURE_OPENAI_ENDPOINT: ${{ secrets.AZURE_OPENAI_ENDPOINT }}
+      AZURE_OPENAI_API_KEY: ${{ secrets.AZURE_OPENAI_API_KEY }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12", cache: pip}
+      - run: pip install -e ".[azure]"
+      - name: Run evaluation + quality gate
+        run: |
+          agentic-eval run \
+            --config config/eval_config.yaml \
+            --dataset examples/enterprise_it_service_desk/dataset.jsonl \
+            --target examples.enterprise_it_service_desk.agents:run_service_desk \
+            --output-dir reports
+      - name: Verify audit chain
+        if: always()
+        run: agentic-eval verify-audit reports/audit.jsonl
+      - name: Job summary
+        if: always()
+        run: cat reports/*.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: eval-reports, path: reports/, retention-days: 30}
+      - uses: mikepenz/action-junit-report@v4
+        if: always()
+        with: {report_paths: "reports/*.junit.xml", check_name: "Agent evaluation"}
