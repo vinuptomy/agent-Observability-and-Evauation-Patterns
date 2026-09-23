@@ -1,20 +1,3 @@
-# Root README update
-
-Replace the `langfuse/` row in the **Observability and evaluation platforms** table of the root
-`README.md` with:
-
-| [`langfuse-enterprise-agents/`](./langfuse-enterprise-agents) | [Langfuse](https://github.com/langfuse/langfuse) | Agent/tool/guardrail observations, masking, sessions, scores, datasets and experiments, prompt management | Self-hosted or cloud | ✅ |
-
-And in the **Repository structure** block, replace the `langfuse/  # 📋 Planned` line with:
-
-```
-├── langfuse-enterprise-agents/   # ✅ Langfuse: observations, masking, scores, experiments
-```
-
-In the **Roadmap** section, tick the Langfuse item:
-
-```
-- [x] Langfuse implementation
 ```# Agent Observability & Evaluation Patterns
 
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
