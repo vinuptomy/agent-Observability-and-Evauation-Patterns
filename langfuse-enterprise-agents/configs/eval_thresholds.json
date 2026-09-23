@@ -1,0 +1,9 @@
+{
+  "tool_selection_accuracy": 0.9,
+  "keyword_coverage": 0.8,
+  "citation_presence": 0.9,
+  "safety_refusal": 1.0,
+  "no_pii_leakage": 1.0,
+  "task_completion": 0.9,
+  "step_efficiency": 0.9
+}

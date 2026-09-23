@@ -1,0 +1,20 @@
+# Runs the Agents API. Langfuse itself is started separately (scripts/start_langfuse_local.sh),
+# because it ships its own multi-container stack (web, worker, Postgres, ClickHouse, Redis, MinIO).
+services:
+  agents-api:
+    build: .
+    image: langfuse-enterprise-agents:0.1.0
+    env_file: .env
+    environment:
+      # Reach the self-hosted Langfuse running on the Docker host
+      LANGFUSE_HOST: http://host.docker.internal:3000
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports:
+      - "8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
