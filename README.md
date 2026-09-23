@@ -61,7 +61,7 @@ This repository demonstrates both, together.
 | Folder | Tool / pattern | Focus | Deployment | Status |
 |---|---|---|---|---|
 | [`opik-enterprise-agents/`](./opik-enterprise-agents) | [Opik](https://github.com/comet-ml/opik) (Comet) | Tracing, feedback scores, datasets, experiments, custom agent metrics, CI quality gate | Self-hosted or cloud | ✅ |
-| `langfuse/` | [Langfuse](https://github.com/langfuse/langfuse) | Tracing, prompt management, sessions, LLM-as-judge | Self-hosted or cloud | 📋 |
+| `langfuse/` | [Langfuse](https://github.com/langfuse/langfuse) | Tracing, prompt management, sessions, LLM-as-judge | Self-hosted or cloud | ✅ |
 | `arize-phoenix/` | [Arize Phoenix](https://github.com/Arize-ai/phoenix) | OpenTelemetry/OpenInference tracing, RAG and agent evaluation | Self-hosted or cloud | 📋 |
 | `langsmith/` | [LangSmith](https://www.langchain.com/langsmith) | LangChain/LangGraph-native tracing and evaluation | Managed, enterprise self-hosted | 📋 |
 | `mlflow-genai/` | [MLflow](https://github.com/mlflow/mlflow) | GenAI tracing, evaluation and model lifecycle | Self-hosted or managed | 📋 |
@@ -155,7 +155,7 @@ agent-Observability-and-Evauation-Patterns/
 │   ├── tests/
 │   ├── docs/                     #    Architecture, observability, evaluation, security
 │   └── ...
-├── langfuse/                     # 📋 Planned
+├── langfuse-enterprise-agents/   # ✅ Langfuse: observations, masking, scores, experiments
 ├── arize-phoenix/                # 📋 Planned
 ├── opentelemetry-genai/          # 📋 Planned
 ├── deepeval/                     # 📋 Planned
@@ -236,7 +236,7 @@ documentation before making a decision.
 ## Roadmap
 
 - [x] Opik: enterprise agents, tracing, custom agent metrics, CI quality gate, security controls
-- [ ] Langfuse implementation
+- [x] Langfuse implementation
 - [ ] Arize Phoenix with OpenInference
 - [ ] OpenTelemetry GenAI semantic conventions (vendor-neutral)
 - [ ] DeepEval and Ragas evaluation suites
