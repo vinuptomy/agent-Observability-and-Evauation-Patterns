@@ -62,7 +62,7 @@ This repository demonstrates both, together.
 |---|---|---|---|---|
 | [`opik-enterprise-agents/`](./enterprise-agent-observability) | [Opik](https://github.com/comet-ml/opik) (Comet) | Tracing, feedback scores, datasets, experiments, custom agent metrics, CI quality gate | Self-hosted or cloud | ✅ |
 | [`langfuse-enterprise-agents/`](./langfuse-enterprise-agents) | [Langfuse](https://github.com/langfuse/langfuse) | Agent/tool/guardrail observations, masking, sessions, scores, datasets and experiments, prompt management | Self-hosted or cloud | ✅ |
-| `arize-phoenix/` | [Arize Phoenix](https://github.com/Arize-ai/phoenix) | OpenTelemetry/OpenInference tracing, RAG and agent evaluation | Self-hosted or cloud | 📋 |
+| [`phoenix-enterprise-agents/`](./phoenix-enterprise-agents)  | [Arize Phoenix](https://github.com/Arize-ai/phoenix) | OpenTelemetry/OpenInference spans (agent, tool, retriever, guardrail), RAG + agent evaluation, datasets and experiments, span annotations | Self-hosted or cloud | ✅ |
 | `langsmith/` | [LangSmith](https://www.langchain.com/langsmith) | LangChain/LangGraph-native tracing and evaluation | Managed, enterprise self-hosted | 📋 |
 | `mlflow-genai/` | [MLflow](https://github.com/mlflow/mlflow) | GenAI tracing, evaluation and model lifecycle | Self-hosted or managed | 📋 |
 | `azure-ai-foundry/` | [Azure AI Foundry](https://learn.microsoft.com/azure/ai-foundry/) | Azure-native tracing, agent evaluators, Application Insights | Azure | 📋 |
@@ -156,7 +156,7 @@ agent-Observability-and-Evauation-Patterns/
 │   ├── docs/                     #    Architecture, observability, evaluation, security
 │   └── ...
 ├── langfuse-enterprise-agents/   # ✅ Langfuse: observations, masking, scores, experiments
-├── arize-phoenix/                # 📋 Planned
+├── phoenix-enterprise-agents/    # ✅ Phoenix: OpenInference spans, RAG + agent evaluati
 ├── opentelemetry-genai/          # 📋 Planned
 ├── deepeval/                     # 📋 Planned
 └── ...
@@ -237,7 +237,7 @@ documentation before making a decision.
 
 - [x] Opik: enterprise agents, tracing, custom agent metrics, CI quality gate, security controls
 - [x] Langfuse implementation
-- [ ] Arize Phoenix with OpenInference
+- [x] Arize Phoenix with OpenInference
 - [ ] OpenTelemetry GenAI semantic conventions (vendor-neutral)
 - [ ] DeepEval and Ragas evaluation suites
 - [ ] Promptfoo red-teaming suite
