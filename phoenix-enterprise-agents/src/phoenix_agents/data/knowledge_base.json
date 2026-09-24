@@ -1,0 +1,14 @@
+[
+  {"id": "KB-101", "title": "Corporate VPN connection problems", "tags": ["vpn", "network", "remote"],
+   "content": "If the VPN keeps disconnecting, update the VPN client to the latest version from the Company Portal, switch from Wi-Fi to a wired connection if possible, and reconnect using the 'Auto' gateway. If it still drops more than 3 times per hour, open a ticket in category network."},
+  {"id": "KB-102", "title": "Password reset and MFA", "tags": ["password", "mfa", "account", "access"],
+   "content": "Reset your password in the self-service portal (Company Portal > Security > Reset password). You must confirm with your registered MFA method. The Service Desk will never ask for your password or MFA codes."},
+  {"id": "KB-103", "title": "Laptop repair and replacement", "tags": ["laptop", "hardware", "device"],
+   "content": "For damaged laptops (broken screen, keyboard, battery), open a hardware ticket. A loan device is provided within 1 business day. Back up local files to OneDrive before handing in the device."},
+  {"id": "KB-201", "title": "Data classification policy", "tags": ["policy", "data", "classification", "confidential"],
+   "content": "Company data is classified as Public, Internal, Confidential or Restricted. Confidential and Restricted data must be encrypted in transit and at rest and shared only with authorised recipients."},
+  {"id": "KB-202", "title": "Acceptable use of generative AI tools", "tags": ["policy", "ai", "genai", "chatbot"],
+   "content": "Confidential or Restricted data, including customer data, must never be entered into public AI chatbots. Use only approved enterprise AI services listed in the AI tool register. Outputs must be reviewed by a human before external use."},
+  {"id": "KB-203", "title": "Reporting phishing emails", "tags": ["security", "phishing", "email"],
+   "content": "Do not click links in suspicious emails. Use the 'Report Phishing' button in Outlook. If you already clicked a link or entered credentials, report it immediately as a high-priority security incident."}
+]

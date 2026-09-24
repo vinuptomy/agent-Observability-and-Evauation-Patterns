@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "phoenix-enterprise-agents"
+version = "0.1.0"
+description = "Enterprise reference solution: tool-calling AI agents traced with OpenTelemetry/OpenInference and evaluated in Arize Phoenix."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+dependencies = [
+    "pydantic>=2.6",
+    "pydantic-settings>=2.2",
+    "openai>=1.40",
+    "arize-phoenix-otel>=0.6",
+    "arize-phoenix-client>=1.0",
+    "openinference-instrumentation>=0.1.20",
+    "openinference-semantic-conventions>=0.1.12",
+]
+
+[project.optional-dependencies]
+evals = ["arize-phoenix-evals>=2.0"]
+api = ["fastapi>=0.110", "uvicorn[standard]>=0.29"]
+dev = ["pytest>=8.0", "ruff>=0.4", "httpx>=0.27"]
+
+[project.scripts]
+agentctl-px = "phoenix_agents.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+phoenix_agents = ["prompts/*.md", "data/*.json", "evaluation/datasets/*.jsonl"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "S"]
+ignore = ["S101", "S311", "E501"]

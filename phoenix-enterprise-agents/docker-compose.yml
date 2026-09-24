@@ -1,0 +1,33 @@
+# Agents API + a self-hosted Phoenix instance.
+services:
+  phoenix:
+    image: arizephoenix/phoenix:latest
+    ports:
+      - "6006:6006"      # UI and OTLP/HTTP collector
+      - "4317:4317"      # OTLP/gRPC collector
+    environment:
+      PHOENIX_WORKING_DIR: /data
+    volumes:
+      - phoenix-data:/data
+    restart: unless-stopped
+
+  agents-api:
+    build: .
+    image: phoenix-enterprise-agents:0.1.0
+    env_file: .env
+    environment:
+      PHOENIX_COLLECTOR_ENDPOINT: http://phoenix:6006/v1/traces
+      PHOENIX_BASE_URL: http://phoenix:6006
+    depends_on:
+      - phoenix
+    ports:
+      - "8000:8000"
+    read_only: true
+    tmpfs:
+      - /tmp
+    security_opt:
+      - no-new-privileges:true
+    restart: unless-stopped
+
+volumes:
+  phoenix-data:

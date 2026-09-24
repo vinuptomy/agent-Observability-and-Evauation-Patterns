@@ -1,0 +1,53 @@
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-evaluate:
+    runs-on: ubuntu-latest
+    env:
+      LLM_PROVIDER: mock
+      PHOENIX_ENABLED: "false"
+      LOG_FORMAT: text
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[api,dev]"
+      - name: Lint
+        run: ruff check src tests
+      - name: Unit & agent behaviour tests
+        run: pytest -q
+      - name: Evaluation quality gate (fails build on regression)
+        run: agentctl-px eval --mode local
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-report
+          path: reports/*.json
+
+  # Optional: run the Langfuse experiment against a real model on main (needs repo secrets)
+  phoenix-experiment:
+    if: github.ref == 'refs/heads/main' && vars.RUN_PHOENIX_EXPERIMENT == 'true'
+    needs: test-and-evaluate
+    runs-on: ubuntu-latest
+    env:
+      LLM_PROVIDER: openai
+      LLM_MODEL: gpt-4o-mini
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      PHOENIX_ENABLED: "true"
+      PHOENIX_BASE_URL: ${{ vars.PHOENIX_BASE_URL }}
+      PHOENIX_COLLECTOR_ENDPOINT: ${{ vars.PHOENIX_COLLECTOR_ENDPOINT }}
+      PHOENIX_API_KEY: ${{ secrets.PHOENIX_API_KEY }}
+      RELEASE: ${{ github.sha }}
+      EVAL_USE_LLM_JUDGE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[evals]"
+      - run: agentctl-px eval --mode phoenix --experiment-name "ci-${{ github.sha }}"
